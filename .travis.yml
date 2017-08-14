@@ -1,0 +1,14 @@
+language: go
+
+go:
+  - 1.7.x
+
+cache:
+  directories:
+    - vendor
+
+script:
+  - make setup
+  - make lint
+  - make test
+  - make cover
