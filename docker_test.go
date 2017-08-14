@@ -6,6 +6,9 @@ import (
 )
 
 func TestDockerTag(t *testing.T) {
+	if !integration {
+		t.Skip("Skipping git integration test")
+	}
 	tests := []struct {
 		tagTemplate string
 	}{
@@ -34,6 +37,9 @@ func TestDockerTag(t *testing.T) {
 }
 
 func TestDockerImageList(t *testing.T) {
+	if !integration {
+		t.Skip("Skipping docker registry integration test")
+	}
 	c := config{
 		Image: configImage{
 			Repository:  "index.docker.io",

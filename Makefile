@@ -52,4 +52,4 @@ cover: check
 
 .PHONY: test
 test: check
-	@go test -v -race $$(go list ./... | grep -v /vendor/)
+	@go test -integration -v -race $$(go list ./... | grep -v /vendor/)

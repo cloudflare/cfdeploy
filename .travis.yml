@@ -10,5 +10,5 @@ cache:
 script:
   - make setup
   - make lint
-  - make test
+  - go test -v -race $(go list ./... | grep -v /vendor/)
   - make cover
