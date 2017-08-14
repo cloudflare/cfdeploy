@@ -1,5 +1,8 @@
 # Cloudflare Deployment Tool
 
+[![Build Status](https://travis-ci.org/cloudflare/cfdeploy.svg?branch=master)](https://travis-ci.org/cloudflare/cfdeploy)
+[![GoDoc](http://godoc.org/github.com/cloudflare/cfdeploy?status.svg)](http://godoc.org/github.com/cloudflare/cfdeploy)
+
 This tool allows you to easily deploy Docker Image(s) to Marathon.
 
 Features:
