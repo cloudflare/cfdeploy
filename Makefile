@@ -40,11 +40,25 @@ hooks: .git/hooks/pre-commit
 .PHONY: lint
 lint: check
 	@gometalinter \
+		--disable-all \
+		--enable=aligncheck \
+		--enable=deadcode \
+		--enable=gas \
+		--enable=goconst \
 		--enable=goimports \
+		--enable=golint \
+		--enable=gosimple \
+		--enable=ineffassign \
+		--enable=interfacer \
 		--enable=misspell \
+		--enable=safesql \
+		--enable=staticcheck \
+		--enable=structcheck \
 		--enable=unparam \
-		--enable=unused \
-		$$(go list ./... | grep -v /vendor/)
+		--enable=varcheck \
+		--enable=vet \
+		--skip vendor \
+		./...
 
 .PHONY: cover
 cover: check
