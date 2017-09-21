@@ -108,7 +108,7 @@ func marathonPrepare(f flags, conf config, vars fileVars) ([]byte, error) {
 	fileData, err := fileLoad(filePath, vars)
 	if err != nil {
 		return nil, fmt.Errorf(
-			"Unable to load '%s' Marathon file:\n%s\n",
+			"Unable to load '%s' Marathon file:\n%s",
 			conf.Environments[f.env].Marathon.File,
 			err,
 		)
