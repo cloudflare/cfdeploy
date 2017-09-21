@@ -82,7 +82,7 @@ func TestMarathonValidate(t *testing.T) {
 		if e != nil && test.err == "" {
 			t.Errorf("(%d) Unexpected error: %s", i, e)
 		} else if e == nil && test.err != "" {
-			t.Errorf("(%d) Expected error '%s' but no error occured", i, test.err)
+			t.Errorf("(%d) Expected error '%s' but no error occurred", i, test.err)
 		} else if e != nil && e.Error() != test.err {
 			t.Errorf("(%d) Expected error '%s' but got '%s'", i, test.err, e)
 		}

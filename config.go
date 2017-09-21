@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
-	yaml "gopkg.in/yaml.v2"
 	"net/http"
 	"strings"
+
+	yaml "gopkg.in/yaml.v2"
 )
 
 type config struct {
@@ -42,7 +43,7 @@ func configLoad(fileData []byte, flags flags) (config, error) {
 
 	// Check environment exists
 	if _, ok := c.Environments[flags.env]; !ok {
-		return config{}, fmt.Errorf("Environment %s not found in config")
+		return config{}, fmt.Errorf("Environment %s not found in config", flags.env)
 	}
 
 	// Override marathon host if provided
