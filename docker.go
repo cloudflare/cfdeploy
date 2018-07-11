@@ -59,6 +59,7 @@ func dockerTag(tagTemplate string) (string, error) {
 	var err error
 	var out []byte
 	if strings.Contains(tagTemplate, ".GitBranch") && dockerTagVars.GitBranch == "" {
+		/* #nosec */
 		out, err = exec.Command("git", "symbolic-ref", "--short", "HEAD").Output()
 		if err != nil {
 			return "", err
@@ -66,6 +67,7 @@ func dockerTag(tagTemplate string) (string, error) {
 		dockerTagVars.GitBranch = strings.TrimSpace(string(out))
 	}
 	if strings.Contains(tagTemplate, ".GitRevCount") && dockerTagVars.GitRevCount == "" {
+		/* #nosec */
 		out, err = exec.Command("git", "rev-list", "--count", "HEAD").Output()
 		if err != nil {
 			return "", err
@@ -73,6 +75,7 @@ func dockerTag(tagTemplate string) (string, error) {
 		dockerTagVars.GitRevCount = strings.TrimSpace(string(out))
 	}
 	if strings.Contains(tagTemplate, ".GitRevShort") && dockerTagVars.GitRevShort == "" {
+		/* #nosec */
 		out, err = exec.Command("git", "rev-parse", "--short", "HEAD").Output()
 		if err != nil {
 			return "", err
