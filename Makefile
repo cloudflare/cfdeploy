@@ -41,7 +41,7 @@ hooks: .git/hooks/pre-commit
 lint: check
 	@gometalinter \
 		--disable-all \
-		--enable=aligncheck \
+		--enable=maligned \
 		--enable=deadcode \
 		--enable=gas \
 		--enable=goconst \
