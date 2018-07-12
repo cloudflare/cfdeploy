@@ -125,7 +125,6 @@ func TestMarathonParseYAMLPorts(t *testing.T) {
 	}
 }
 
-
 func TestMarathonParseYAMLHealthCheck(t *testing.T) {
 	tests := []struct {
 		yaml         string
