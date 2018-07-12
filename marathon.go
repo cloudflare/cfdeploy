@@ -61,11 +61,11 @@ type marathonApp struct {
 		Docker *struct {
 			Image      string `json:"image" yaml:"image"`
 			Network    string `json:"network" yaml:"network"`
-			Privileged bool   `json:"privileged" yaml:"privileged"`
 			Parameters []struct {
 				Key   string `json:"key" yaml:"key"`
 				Value string `json:"value" yaml:"value"`
 			} `json:"parameters" yaml:"parameters"`
+			Privileged     bool `json:"privileged" yaml:"privileged"`
 			ForcePullImage bool `json:"forcePullImage" yaml:"forcePullImage"`
 		} `json:"docker,omitempty" yaml:"docker"`
 	} `json:"container" yaml:"container"`
