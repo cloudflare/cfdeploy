@@ -34,6 +34,8 @@ apps:
     healthChecks:
       - protocol: HTTP
         path: /_healthcheck
+        command:
+          value: foo
         gracePeriodSeconds: 3
         intervalSeconds: 10
         portIndex: 0
@@ -139,6 +141,10 @@ func TestMarathonYAMLtoJSON(t *testing.T) {
 		{
 			yaml: []byte(`apps: [{portDefinitions: [{port: 0, name: metrics}, {port: 0, name: pprof}]}]`),
 			json: []byte(`{"id":"","apps":[{"id":"","instances":0,"cpus":0,"mem":0,"constraints":null,"portDefinitions":[{"port":0,"name":"metrics"},{"port":0,"name":"pprof"}],"requirePorts":false,"container":{"type":"","volumes":null}}]}`),
+		},
+		{
+			yaml: []byte(`apps: [{healthChecks: [{protocol: COMMAND, command: {value: foo}, gracePeriodSeconds: 2, intervalSeconds: 2, portIndex: 1, timeoutSeconds: 2, maxConsecutiveFailures: 2 }]}]`),
+			json: []byte(`{"id":"","apps":[{"id":"","instances":0,"cpus":0,"mem":0,"constraints":null,"requirePorts":false,"container":{"type":"","volumes":null},"healthChecks":[{"protocol":"COMMAND","command":{"value":"foo"},"gracePeriodSeconds":2,"intervalSeconds":2,"portIndex":1,"timeoutSeconds":2,"maxConsecutiveFailures":2}]}]}`),
 		},
 	}
 	for i, test := range tests {
