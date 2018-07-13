@@ -125,39 +125,11 @@ func TestMarathonParseYAMLPorts(t *testing.T) {
 	}
 }
 
-func TestMarathonParseYAMLHealthCheck(t *testing.T) {
-	tests := []struct {
-		yaml         string
-		expectError  bool
-		validateFunc func(*marathonGroup) bool
-	}{
-		{
-			yaml: "apps: [{healthChecks: [{protocol: COMMAND, command: {value: foo}, gracePeriodSeconds: 2, intervalSeconds: 2, portIndex: 1, timeoutSeconds: 2, maxConsecutiveFailures: 2 }]}]",
-			validateFunc: func(g *marathonGroup) bool {
-				hc := g.Apps[0].HealthChecks[0]
-				return hc.Protocol == "COMMAND" && hc.Command.Value == "foo" && hc.GracePeriodSeconds == 2 &&
-					hc.IntervalSeconds == 2 && hc.PortIndex == 1 && hc.TimeoutSeconds == 2 && hc.MaxConsecutiveFailures == 2
-			},
-		},
-	}
-	for i, test := range tests {
-		config, err := marathonParseYAML([]byte(test.yaml))
-		switch {
-		case err != nil && test.expectError:
-		case err == nil && test.expectError:
-			t.Errorf("expected error, didn't get it")
-		case err != nil:
-			t.Errorf("unexpected error in test %v: %v", i, err)
-		case !test.validateFunc(&config):
-			t.Errorf("invalid result for test %v: %#v", i, config)
-		}
-	}
-}
-
 func TestMarathonYAMLtoJSON(t *testing.T) {
 	tests := []struct {
-		yaml []byte
-		json []byte
+		yaml         []byte
+		json         []byte
+		validateFunc func(group *marathonGroup) bool
 	}{
 		{
 			yaml: []byte(``),
@@ -170,6 +142,15 @@ func TestMarathonYAMLtoJSON(t *testing.T) {
 		{
 			yaml: []byte(`apps: [{portDefinitions: [{port: 0, name: metrics}, {port: 0, name: pprof}]}]`),
 			json: []byte(`{"id":"","apps":[{"id":"","instances":0,"cpus":0,"mem":0,"constraints":null,"portDefinitions":[{"port":0,"name":"metrics"},{"port":0,"name":"pprof"}],"requirePorts":false,"container":{"type":"","volumes":null}}]}`),
+		},
+		{
+			yaml: []byte(`apps: [{healthChecks: [{protocol: COMMAND, command: {value: foo}, gracePeriodSeconds: 2, intervalSeconds: 2, portIndex: 1, timeoutSeconds: 2, maxConsecutiveFailures: 2 }]}]`),
+			json: []byte(`{"id":"","apps":[{"id":"","instances":0,"cpus":0,"mem":0,"constraints":null,"requirePorts":false,"container":{"type":"","volumes":null},"healthChecks":[{"protocol":"COMMAND","command":{"value":"foo"},"gracePeriodSeconds":2,"intervalSeconds":2,"portIndex":1,"timeoutSeconds":2,"maxConsecutiveFailures":2}]}]}`),
+			validateFunc: func(g *marathonGroup) bool {
+				hc := g.Apps[0].HealthChecks[0]
+				return hc.Protocol == "COMMAND" && hc.Command.Value == "foo" && hc.GracePeriodSeconds == 2 &&
+					hc.IntervalSeconds == 2 && hc.PortIndex == 1 && hc.TimeoutSeconds == 2 && hc.MaxConsecutiveFailures == 2
+			},
 		},
 	}
 	for i, test := range tests {
@@ -187,6 +168,9 @@ func TestMarathonYAMLtoJSON(t *testing.T) {
 				test.json,
 				marathonJSON,
 			)
+		}
+		if test.validateFunc != nil && !test.validateFunc(&config) {
+			t.Errorf("invalid result for test %v: %#v", i, config)
 		}
 	}
 }
