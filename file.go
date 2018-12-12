@@ -13,7 +13,7 @@ type fileVars struct {
 func fileLoad(path string, vars fileVars) ([]byte, error) {
 
 	// Read file
-	data, err := ioutil.ReadFile(path)
+	data, err := ioutil.ReadFile(path) // #nosec G304
 	if err != nil {
 		return nil, err
 	}

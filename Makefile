@@ -43,10 +43,10 @@ lint: check
 		--disable-all \
 		--enable=maligned \
 		--enable=deadcode \
-		--enable=gas \
 		--enable=goconst \
 		--enable=goimports \
 		--enable=golint \
+		--enable=gosec \
 		--enable=gosimple \
 		--enable=ineffassign \
 		--enable=interfacer \
