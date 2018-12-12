@@ -20,7 +20,7 @@ type marathonGroup struct {
 
 type portDefinition struct {
 	Port int64  `json:"port" yaml:"port"`
-	Name string `json:"name" yaml:"name"`
+	Name string `json:"name,omitempty" yaml:"name,omitempty"`
 }
 
 type checkCommand struct {

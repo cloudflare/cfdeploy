@@ -106,6 +106,12 @@ func TestMarathonParseYAMLPorts(t *testing.T) {
 			validateFunc: func(g *marathonGroup) bool { return g.Apps[0].PortDefinitions[0].Name == "metrics" },
 		},
 		{
+			yaml: "apps: [{portDefinitions: [{port: 0}, {port: 0, name: pprof}]}]",
+			validateFunc: func(g *marathonGroup) bool {
+				return g.Apps[0].PortDefinitions[0].Name == "" && g.Apps[0].PortDefinitions[1].Name == "pprof"
+			},
+		},
+		{
 			yaml:         "apps: [{portDefinitions: [0, 0]}]",
 			expectError:  true,
 			validateFunc: nil,
@@ -137,6 +143,11 @@ func TestMarathonYAMLtoJSON(t *testing.T) {
 		{
 			yaml: []byte(`apps: [{ports: [0, 0]}]`),
 			json: []byte(`{"id":"","apps":[{"id":"","instances":0,"cpus":0,"mem":0,"constraints":null,"ports":[0,0],"requirePorts":false,"container":{"type":"","volumes":null}}]}`),
+		},
+		// validate that portDefinition doesn't create empty name fields.
+		{
+			yaml: []byte(`apps: [{portDefinitions: [{port: 0}]}]`),
+			json: []byte(`{"id":"","apps":[{"id":"","instances":0,"cpus":0,"mem":0,"constraints":null,"portDefinitions":[{"port":0}],"requirePorts":false,"container":{"type":"","volumes":null}}]}`),
 		},
 		{
 			yaml: []byte(`apps: [{portDefinitions: [{port: 0, name: metrics}, {port: 0, name: pprof}]}]`),
