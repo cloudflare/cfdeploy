@@ -242,7 +242,7 @@ func dockerGetImage(imageRepo, imageName, imageTag, token string) (authHeader st
 	}
 	// Get response
 	respBody, err := ioutil.ReadAll(resp.Body)
-	resp.Body.Close()
+	resp.Body.Close() // #nosec G104
 	if err != nil {
 		err = fmt.Errorf(
 			"Error reading response: %s",
@@ -336,7 +336,7 @@ func dockerGetToken(authHeader string) (string, error) {
 	reqURL.RawQuery = reqQuery.Encode()
 	authURL := reqURL.String()
 	// Request auth token
-	resp, err := http.Get(authURL)
+	resp, err := http.Get(authURL) // #nosec G107
 	if err != nil {
 		return "", fmt.Errorf(
 			"GET %s\n%s",
@@ -346,7 +346,7 @@ func dockerGetToken(authHeader string) (string, error) {
 	}
 	// Get response
 	respBody, err := ioutil.ReadAll(resp.Body)
-	resp.Body.Close()
+	resp.Body.Close() // #nosec G104
 	if err != nil {
 		return "", fmt.Errorf(
 			"GET %s\nError reading response: %s",

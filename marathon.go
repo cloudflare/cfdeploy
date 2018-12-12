@@ -239,7 +239,7 @@ func marathonPush(conf config, jsonConfig []byte, force bool) (marathonResult, e
 	}
 	// Get response
 	respBody, err := ioutil.ReadAll(resp.Body)
-	resp.Body.Close()
+	resp.Body.Close() // #nosec G104
 	if err != nil {
 		return marathonResult{}, fmt.Errorf(
 			"Error reading response: %s",
