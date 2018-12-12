@@ -106,8 +106,10 @@ func TestMarathonParseYAMLPorts(t *testing.T) {
 			validateFunc: func(g *marathonGroup) bool { return g.Apps[0].PortDefinitions[0].Name == "metrics" },
 		},
 		{
-			yaml:         "apps: [{portDefinitions: [{port: 0}, {port: 0, name: pprof}]}]",
-			validateFunc: func(g *marathonGroup) bool { return g.Apps[0].PortDefinitions[0].Name == "" && g.Apps[0].PortDefinitions[1].Name == "pprof" },
+			yaml: "apps: [{portDefinitions: [{port: 0}, {port: 0, name: pprof}]}]",
+			validateFunc: func(g *marathonGroup) bool {
+				return g.Apps[0].PortDefinitions[0].Name == "" && g.Apps[0].PortDefinitions[1].Name == "pprof"
+			},
 		},
 		{
 			yaml:         "apps: [{portDefinitions: [0, 0]}]",
