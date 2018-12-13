@@ -73,14 +73,14 @@ type marathonApp struct {
 	Labels       map[string]string `json:"labels,omitempty" yaml:"labels"`
 	Dependencies []string          `json:"dependencies,omitempty" yaml:"dependencies"`
 	HealthChecks []struct {
-		Protocol               string       `json:"protocol,omitempty" yaml:"protocol"`
-		Command                checkCommand `json:"command,omitempty" yaml:"command"`
-		Path                   string       `json:"path,omitempty" yaml:"path"`
-		GracePeriodSeconds     int64        `json:"gracePeriodSeconds,omitempty" yaml:"gracePeriodSeconds"`
-		IntervalSeconds        int64        `json:"intervalSeconds,omitempty" yaml:"intervalSeconds"`
-		PortIndex              int64        `json:"portIndex,omitempty" yaml:"portIndex"`
-		TimeoutSeconds         int64        `json:"timeoutSeconds,omitempty" yaml:"timeoutSeconds"`
-		MaxConsecutiveFailures int64        `json:"maxConsecutiveFailures,omitempty" yaml:"maxConsecutiveFailures"`
+		Protocol               string        `json:"protocol,omitempty" yaml:"protocol"`
+		Command                *checkCommand `json:"command,omitempty" yaml:"command"`
+		Path                   string        `json:"path,omitempty" yaml:"path"`
+		GracePeriodSeconds     int64         `json:"gracePeriodSeconds,omitempty" yaml:"gracePeriodSeconds"`
+		IntervalSeconds        int64         `json:"intervalSeconds,omitempty" yaml:"intervalSeconds"`
+		PortIndex              int64         `json:"portIndex,omitempty" yaml:"portIndex"`
+		TimeoutSeconds         int64         `json:"timeoutSeconds,omitempty" yaml:"timeoutSeconds"`
+		MaxConsecutiveFailures int64         `json:"maxConsecutiveFailures,omitempty" yaml:"maxConsecutiveFailures"`
 	} `json:"healthChecks,omitempty" yaml:"healthChecks"`
 	UpgradeStrategy *struct {
 		MinimumHealthCapacity *float64 `json:"minimumHealthCapacity,omitempty" yaml:"minimumHealthCapacity"`
